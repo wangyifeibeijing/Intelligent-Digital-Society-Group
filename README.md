@@ -1,5 +1,5 @@
 # Intelligent-Digital-Society-Group
-|Data|Speakers|Topics|appendix|
+|Date|Speakers|Topics|appendix|
 |----|--------|------|----------------|
 |2019-09-14|Liu Ruining    |[Collective Deep Quantization for Efficient Cross-Modal Retrieval](2019-09-14/liurn/ppt)|[paper](2019-09-14/liurn/paper)|
 |2019-09-14|Peng Huilin    |[基于特征表示的新闻推荐](2019-09-14/penghl/ppt)|[paper](2019-09-14/penghl/paper)|
