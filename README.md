@@ -1,7 +1,7 @@
 # Intelligent-Digital-Society-Group
 |Date|Speakers|Topics|appendix|
 |----|--------|------|----------------|
-|2019-09-29|Peng Huilin    |[[Youtube] Deep Neural Networks for YouTube Recommendations (Youtube 2016)](2019-09-29/penghl/ppt)|[paper](2019-09-29/penghl/paper)|
+|2019-09-29|Peng Huilin    |[ Deep Neural Networks for YouTube Recommendations](2019-09-29/penghl/ppt)|[paper](2019-09-29/penghl/paper)|
 |2019-09-22|Shan Zhangming    |[句子生成-变分自编码器-并行文本生成](2019-09-22/shanzm/ppt)|[paper](2019-09-22/shanzm/paper)|
 |2019-09-22|Liu Ruining    |[Collective Deep Quantization for Efficient Cross-Modal Retrieval（part2）](2019-09-22/liurn/ppt)|[paper](2019-09-22/liurn/paper)|
 |2019-09-22|Liu Ruining    |[Collective Deep Quantization for Efficient Cross-Modal Retrieval（part2）](2019-09-22/liurn/ppt)|[paper](2019-09-22/liurn/paper)|
