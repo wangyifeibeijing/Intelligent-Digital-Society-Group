@@ -54,14 +54,14 @@ class My_model(nn.Module):
         self.layer_init = nn.Sequential(nn.Linear(fsdh_input_dim, self.nbits), nn.BatchNorm1d(self.nbits), nn.tanh())
 
     def forward(self, X, Y, train):
+        B = self.layer_init(X).t()
+        
         X = self.layer1(X)
         X = self.layer2(X)
         X = self.layer3(X)
         # B = self.W.mm(X.t()) + self.b
         # B = Function.tanh(B)
         # B = B.t()
-        
-        B = self.layer_init(X).t()
         
         if train:
             for i in range(self.layers):
