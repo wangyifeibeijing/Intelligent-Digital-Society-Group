@@ -47,16 +47,22 @@ class My_model(nn.Module):
         # self.W = nn.ParameterList()
         # self.b = nn.ParameterList()
         # for k in range(self.layers):
-        self.W = nn.Parameter(torch.eye(self.nbits,fsdh_out_dim,dtype=torch.float32))
-        self.b = nn.Parameter(torch.eye(self.nbits, self.batch_size, dtype=torch.float32))
+        # self.W = nn.Parameter(torch.eye(self.nbits,fsdh_out_dim,dtype=torch.float32))
+        # self.b = nn.Parameter(torch.eye(self.nbits, self.batch_size, dtype=torch.float32))
+        
+        #
+        self.layer_init = nn.Sequential(nn.Linear(fsdh_input_dim, self.nbits), nn.BatchNorm1d(self.nbits), nn.tanh())
 
     def forward(self, X, Y, train):
         X = self.layer1(X)
         X = self.layer2(X)
         X = self.layer3(X)
-        B = self.W.mm(X.t()) + self.b
-        B = Function.tanh(B)
-        B = B.t()
+        # B = self.W.mm(X.t()) + self.b
+        # B = Function.tanh(B)
+        # B = B.t()
+        
+        B = self.layer_init(X).t()
+        
         if train:
             for i in range(self.layers):
                 P = self.alpha * torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float())
