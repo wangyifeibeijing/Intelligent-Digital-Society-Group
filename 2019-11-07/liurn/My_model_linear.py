@@ -13,22 +13,22 @@ warnings.filterwarnings('ignore')
 import argparse
 import time
 
-num = 12
+num = 15
 checkpoint_num = 1
 start_epoch = 0
-epoch_num = 200
+epoch_num = 1500
 fsdh_input_dim = 512
 fsdh_hidden_1 = 1000
 fsdh_hidden_2 = 500
 # fsdh_out_dim = np.array([8,16,32,64])
-fsdh_out_dim = 32
+fsdh_out_dim = 64
 layers = 10
-batch_size = 100
+batch_size = 200
 learning_rate = 0.05
-need_train = False
-resume_train_tag = True
+need_train = True
+resume_train_tag = False
 model_saved_path = "G:\\data\\mat_data\\my_model_layers"+str(layers)+"_nbits"+str(fsdh_out_dim)+"_lr"+str(learning_rate)\
-                  +"_epoch400"+".pt"  #+str(epoch_num)
+                  +"_epoch"+str(epoch_num)+".pt"  #+str(epoch_num)
 # model_saved_path = "G:\\data\\mat_data\\my_model_layers10_nbits32_lr0.005_epoch400_checkpoint1.pt"
 model_chp_saved_path = "G:\\data\\mat_data\\my_model_layers" + str(layers) + "_nbits" + str(fsdh_out_dim) + "_lr" + str(
         learning_rate) + "_epoch" + str(epoch_num) + "_checkpoint" + str(checkpoint_num) + ".pt"
@@ -43,8 +43,9 @@ class Selfloss(nn.Module):
         return loss
 
 class My_model(nn.Module):
-    def __init__(self, fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers, beta=0.3, gamma=1e-3,
-                 alpha=1.0, mu=0.1, batch_size=100):
+    def __init__(self, fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers, batch_size, beta=0.8, gamma=1e-4,
+                 alpha=1.0, mu=0.1):
+        # [alpha, beta, gamma, mu] = |XP-B|, |YW-B|, |W|, |B-11^T|
         super(My_model, self).__init__()
         self.layers = layers
         self.beta = beta
@@ -55,7 +56,7 @@ class My_model(nn.Module):
         self.layer1 = nn.Sequential(nn.Linear(fsdh_input_dim, fsdh_hidden_1), nn.BatchNorm1d(fsdh_hidden_1), nn.ReLU())
         self.layer2 = nn.Sequential(nn.Linear(fsdh_hidden_1, fsdh_hidden_2), nn.BatchNorm1d(fsdh_hidden_2), nn.ReLU())
         self.layer3 = nn.Linear(fsdh_hidden_2, fsdh_out_dim)
-        self.layer_init = nn.Sequential(nn.Linear(fsdh_input_dim,fsdh_out_dim),nn.Tanh())  # nn.BatchNorm1d(fsdh_out_dim),
+        self.layer_init = nn.Sequential(nn.Linear(fsdh_input_dim,fsdh_out_dim),nn.BatchNorm1d(fsdh_out_dim),nn.Tanh())  # nn.BatchNorm1d(fsdh_out_dim),
 
     def forward(self, X, Y, train):
         # print(X[:5])
@@ -76,7 +77,7 @@ class My_model(nn.Module):
                 B = Function.tanh(self.alpha * X.mm(P))
         return B
 
-mymodel = My_model(fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers=layers)
+mymodel = My_model(fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers=layers, batch_size=batch_size)
 optimizer = torch.optim.SGD(mymodel.parameters(), lr=learning_rate)
 criterion_fsdh = Selfloss()
 
@@ -97,6 +98,8 @@ def train_data(model):
             Y = ohe.transform(label.reshape(-1,1)).toarray()
             Y = torch.tensor(Y,dtype=torch.float32)
             B_batch_last = model(data.float(), Y, train=True)  # 生成的预测值
+            if ii == 1:
+                print(B_batch_last[:5,:5])
             sim = Y.mm(Y.t())
             sim = (sim > 0).float()
             sim = (sim - 0.5) * 2
@@ -128,7 +131,7 @@ def train_data(model):
 
 def resume_train():
     checkpoint = torch.load(model_saved_path)
-    model = My_model(fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers=layers)
+    model = My_model(fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers=layers, batch_size=batch_size)
     model.load_state_dict(checkpoint['model'])
     optimizer.load_state_dict(checkpoint['optimizer'])
     epoch = checkpoint['epoch']
@@ -138,8 +141,8 @@ def resume_train():
     return model,epoch_,loss_last
 
 def load_model():
-    checkpoint = torch.load(model_chp_saved_path)
-    model = My_model(fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers=layers)
+    checkpoint = torch.load(model_saved_path)
+    model = My_model(fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, layers=layers, batch_size=batch_size)
     model.load_state_dict(checkpoint['model'])
     model.eval()
     return model

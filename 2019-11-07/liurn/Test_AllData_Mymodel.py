@@ -131,10 +131,10 @@ def train():
         sio.savemat(label_exp_path, {"label_exp": np.array(YY_exp)})
     else:
         print("only use model")
-        ham_path = "G:\\data\\mat_data\\ham_dis_" + str(num) + "_checkpoint" + str(checkpoint_num) + ".mat"
+        ham_path = "G:\\data\\mat_data\\ham_dis_" + str(num) + ".mat"  # "_checkpoint" + str(checkpoint_num) +
         sio.savemat(ham_path, {"hamdis": hamdis})
-        label_test_path = "G:\\data\\mat_data\\test_label_" + str(num) + "_checkpoint" + str(checkpoint_num) + ".mat"
-        label_exp_path = "G:\\data\\mat_data\\database_label_" + str(num) + "_checkpoint" + str(checkpoint_num) + ".mat"
+        label_test_path = "G:\\data\\mat_data\\test_label_" + str(num) + ".mat"
+        label_exp_path = "G:\\data\\mat_data\\database_label_" + str(num) + ".mat"
         sio.savemat(label_test_path, {"label_test": np.array(YY_test)})
         sio.savemat(label_exp_path, {"label_exp": np.array(YY_exp)})
     # mAP = cal_new.cal_mAP(YY_exp, YY_test, hamdis)
