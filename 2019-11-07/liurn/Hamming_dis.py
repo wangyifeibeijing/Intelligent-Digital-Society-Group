@@ -40,8 +40,6 @@ def compactbit(B):
 def get_hamming_mat(B_last_test, B_last_exp):
     print(B_last_test.shape)
     print(B_last_exp.shape)
-    print(B_last_test[:1])
-    print(B_last_exp[:10])
     # B_last_test = compactbit(B_last_test)
     # B_last_exp = compactbit(B_last_exp)
     # print(size(B_last_test,0))
@@ -55,7 +53,7 @@ def get_hamming_mat(B_last_test, B_last_exp):
 
     # print(Dish)
     print("get hamming dis mat successfully")
-    print(Dish[:1,:10])
+    print(Dish.shape)
     return Dish
 
 def test():
