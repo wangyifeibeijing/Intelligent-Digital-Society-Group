@@ -17,9 +17,9 @@ warnings.filterwarnings("ignore")
 # device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
 
 # model_saved_path = "D:\\pychdarm\\FSDH\\my_model_layers10_nbits32_lr0.005_epoch500_20191030-3.pt"
-num = 33
+num = 1
 start_epoch = 1
-epoch_num = 2
+epoch_num = 500
 fsdh_input_dim = 500
 fsdh_hidden_1 = 1000
 fsdh_hidden_2 = 500
@@ -29,7 +29,7 @@ batch_size = Dataloader_new.get_batchsize()
 learning_rate = 0.05
 checkpoint_num = 0
 need_train = True
-model_saved_path = "../res_mat_cpu/my_model" + str(num) + "_layers" + str(layers) + "_nbits" + str(
+model_saved_path = "../res_mat_cpu/my_model2_" + str(num) + "_layers" + str(layers) + "_nbits" + str(
     fsdh_out_dim) + "_lr" + str(learning_rate) + "_epoch" + str(epoch_num) + ".pt"
 print(model_saved_path)
 os.environ["CUDA_VISIBLE_DEVICES"] = '1'
@@ -69,27 +69,27 @@ class My_model(nn.Module):
     def forward(self, X, Y, train):
         B = self.layer_init(X)
         martix1_temp = torch.diagflat(self.vec[0])
-        B = self.layer_init1(B.mm(martix1_temp.mm(martix1_temp.t())))
+        B = self.layer_init1(B.mm(martix1_temp))
         X = self.layer1(X)
         X = self.layer2(X)
         X = self.layer3(X)
         if train:
             for i in range(self.layers):
                 martix_temp = torch.diagflat(self.vec[i+1])
-                martix = martix_temp.mm(martix_temp.t())
+                # martix = martix_temp.mm(martix_temp.t())
                 P = self.alpha * torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(
                     B.float())  # .cuda()
                 W = self.beta * torch.inverse(
                     self.beta * (Y.t().mm(Y)).float() + self.gamma * torch.eye(size(Y, 1)).float()).mm(
                     Y.t().float()).mm(B.float())
-                B_temp = (self.alpha * X.mm(P) + self.beta * Y.mm(W)).mm(martix)
+                B_temp = (self.alpha * X.mm(P) + self.beta * Y.mm(W)).mm(martix_temp)
                 B = Function.tanh(B_temp)
         else:
             for i in range(self.layers):
                 martix_temp = torch.diagflat(self.vec[i + 1])
-                martix = martix_temp.mm(martix_temp.t())
+                # martix = martix_temp.mm(martix_temp.t())
                 P = self.alpha * torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float())
-                B_temp = (self.alpha * X.mm(P)).mm(martix)
+                B_temp = (self.alpha * X.mm(P)).mm(martix_temp)
                 B = Function.tanh(B_temp)
         return B
 
@@ -162,8 +162,8 @@ def train_data():
         epoch_et = time.time()
         print("epoch time: ", epoch_et - epoch_st)
         global checkpoint_num
-        for name, parameters in mymodel.named_parameters():
-            print(name, ':', parameters.size(), parameters[:3])
+        # for name, parameters in mymodel.named_parameters():
+        #     print(name, ':', parameters.size(), parameters[:3])
     #        if checkpoint_num>0:
     #            if epoch%1000==0:
     #                path_temp = model_saved_path+'_ckp'+str(checkpoint_num)
