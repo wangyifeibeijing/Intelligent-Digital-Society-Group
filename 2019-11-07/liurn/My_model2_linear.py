@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore")
 # model_saved_path = "D:\\pychdarm\\FSDH\\my_model_layers10_nbits32_lr0.005_epoch500_20191030-3.pt"
 num = 1
 start_epoch = 1
-epoch_num = 500
+epoch_num = 1000
 fsdh_input_dim = 500
 fsdh_hidden_1 = 1000
 fsdh_hidden_2 = 500
@@ -76,8 +76,7 @@ class My_model(nn.Module):
         if train:
             for i in range(self.layers):
                 martix_temp = torch.diagflat(self.vec[i+1])
-                # martix = martix_temp.mm(martix_temp.t())
-                P = self.alpha * torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(
+                P = torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(
                     B.float())  # .cuda()
                 W = self.beta * torch.inverse(
                     self.beta * (Y.t().mm(Y)).float() + self.gamma * torch.eye(size(Y, 1)).float()).mm(
@@ -87,8 +86,7 @@ class My_model(nn.Module):
         else:
             for i in range(self.layers):
                 martix_temp = torch.diagflat(self.vec[i + 1])
-                # martix = martix_temp.mm(martix_temp.t())
-                P = self.alpha * torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float())
+                P = torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float())
                 B_temp = (self.alpha * X.mm(P)).mm(martix_temp)
                 B = Function.tanh(B_temp)
         return B

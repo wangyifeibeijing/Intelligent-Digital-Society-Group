@@ -1,8 +1,8 @@
 # test部分
 import torch
 import Dataloader_new
-import My_model_linear_gpu as ff
-# import My_model2_linear as ff
+# import My_model_linear_gpu as ff
+import My_model2_linear as ff
 from numpy import *
 import numpy as np
 import Hamming_dis as ham
@@ -60,8 +60,10 @@ def test_data():
         # label_test = np.concatenate((label_test,np.array(label)),axis = 0 )
         label = label.cpu()
         YY = torch.cat((YY,label))  # 1000*10
-        sim = label.mm(label.t())
-        sim = (sim > 0).float()
+        norm2 = torch.norm(label, p=2, dim=1, keepdim=True)
+        label1 = label / norm2
+        sim = label1.mm(label1.t())
+        # sim = (sim > 0).float()
         sim = (sim - 0.5) * 2
         loss = ff.criterion_fsdh(B_batch_last, sim) / size(data, 0)
         if ii % 100 == 0:
@@ -95,8 +97,10 @@ def all_data():
         # label_exp = np.concatenate((label_exp,np.array(label)),axis = 0 )
         label = label.cpu()
         YY = torch.cat((YY, label))
-        sim = label.mm(label.t())
-        sim = (sim > 0).float()
+        norm2 = torch.norm(label, p=2, dim=1, keepdim=True)
+        label1 = label / norm2
+        sim = label1.mm(label1.t())
+        # sim = (sim > 0).float()
         sim = (sim - 0.5) * 2
         loss = ff.criterion_fsdh(B_batch_last, sim) / size(data, 0)
         if ii%100==0:
@@ -121,7 +125,7 @@ def train():
 
     # label_test_path = "D:\\pycharm\\FSDH\\label_test2.mat"
     # label_exp_path = "D:\\pycharm\\FSDH\\label_exp2.mat"
-    label_test_path = "../res_mat_cpu/label_test"+str(num)+".mat"
+    label_test_path = "../res_mat_cpu/label_test"+str(num)+".mat" # _model2_
     label_exp_path = "../res_mat_cpu/label_exp"+str(num)+".mat"
     sio.savemat(label_test_path, {"label_test": np.array(YY_test)})
     sio.savemat(label_exp_path, {"label_exp": np.array(YY_exp)})

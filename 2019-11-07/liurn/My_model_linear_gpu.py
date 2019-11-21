@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 # device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
 
 # model_saved_path = "D:\\pychdarm\\FSDH\\my_model_layers10_nbits32_lr0.005_epoch500_20191030-3.pt"
-num = 2
+num = 9
 start_epoch = 1
 epoch_num = 1000
 fsdh_input_dim = 500
@@ -43,7 +43,7 @@ class Selfloss(nn.Module):
         return loss
 
 class My_model(nn.Module):
-    def __init__(self, fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, batch_size, layers, beta=2.0, gamma=1e-3,
+    def __init__(self, fsdh_input_dim, fsdh_hidden_1, fsdh_hidden_2, fsdh_out_dim, batch_size, layers, beta=5.0, gamma=1e-3,
                  alpha=1.0, mu=0.):
         super(My_model, self).__init__()
         # FX_matrix是原数据   Y_matrix是标签
@@ -66,12 +66,12 @@ class My_model(nn.Module):
         X = self.layer3(X)
         if train:
             for i in range(self.layers):
-                P = self.alpha * torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float()) # .cuda()
+                P = torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float()) # .cuda()
                 W = self.beta * torch.inverse(self.beta * (Y.t().mm(Y)).float() + self.gamma * torch.eye(size(Y, 1)).float()).mm(Y.t().float()).mm(B.float())
                 B = Function.tanh(self.alpha * X.mm(P) + self.beta * Y.mm(W))
         else:
             for i in range(self.layers):
-                P = self.alpha * torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float())
+                P = torch.inverse(X.t().mm(X) + self.gamma * torch.eye(size(X, 1))).mm(X.t()).mm(B.float())
                 B = Function.tanh(self.alpha * X.mm(P))
         return B
 
