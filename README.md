@@ -8,3 +8,4 @@
 |2019-09-14|Peng Huilin    |[基于特征表示的新闻推荐](2019-09-14/penghl/ppt)|[paper](2019-09-14/penghl/paper)|
 |2019-09-07|Shan Zhangming |[主题词到文本生成](2019-09-07/shanzm/ppt)|[paper](2019-09-07/shanzm/paper)|
 |2019-09-07|Peng Huilin    |[DKN:Deep Knowledge-Aware Network for News Recommendation](2019-09-07/penghl/ppt)|[paper](2019-09-07/penghl/paper)|
+|2020-04-26|Zhang Huilin   |[Neural News Recommendation with Attentive MultiView Learning](2020-04-26/zhangyl)|[paper](2020-04-26/zhangyl)|
