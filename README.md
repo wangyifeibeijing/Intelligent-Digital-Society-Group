@@ -11,6 +11,7 @@
 |2020-04-26|Zhang Yali     |[Neural News Recommendation with Attentive MultiView Learning](2020-04-26/zhangyl)|[paper](2020-04-26/zhangyl)|
 |2020-04-26|Qi Wang        |[DeepFM+LSTUR+Topic-Aware+multihead+HyperNews](2020-04-26/QiWang)|[paper](2020-04-26/QiWang)|
 |2020-05-10|Zhang Yali     |[Neural Graph Collaborative Filtering](2020-05-10/zhangyl)|[paper](2020-05-10/zhangyl)|
+|2020-05-10|Qi Wang        |[LightRec](2020-05-10/QiWang)|[paper](2020-05-10/QiWang)|
 |2020-05-23|Zhang Yali     |[Knowledge Graph Convolutional Networks](2020-05-23/zhangyl)|[paper](2020-05-23/zhangyl)|
 |2020-06-13|Zhang Yali     |[Hierarchical Fashion Graph Network](2020-06-13/zhangyl)|[paper](2020-06-13/zhangyl)|
 |2020-06-27|Zhang Yali     |[POG-Alibaba](2020-06-27/zhangyl)|[paper](2020-06-27/zhangyl)|
