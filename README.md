@@ -15,6 +15,7 @@
 |2020-05-23|Zhang Yali     |[KGCN](2020-05-23/zhangyl)|[paper](2020-05-23/zhangyl)|
 |2020-05-23|Qi Wang        |[KGAT](2020-05-23/QiWang)|[paper](2020-05-23/QiWang)|
 |2020-06-13|Zhang Yali     |[HFGN](2020-06-13/zhangyl)|[paper](2020-06-13/zhangyl)|
+|2020-06-20|Qi Wang        |[文本生成（TransFormer的结构）：Attention is all you need](2020-06-20/QiWang)|[paper](2020-06-20/QiWang)|
 |2020-06-27|Zhang Yali     |[POG-Alibaba](2020-06-27/zhangyl)|[paper](2020-06-27/zhangyl)|
 |2020-07-04|Qi Wang        |[文本生成（故事情节线）：Plan and Write](2020-07-04/QiWang)|[paper](2020-07-04/QiWang)|
 |2020-07-11|Zhang Yali     |[OutfitNet](2020-07-11/zhangyl)|[paper](2020-07-11/zhangyl)|
