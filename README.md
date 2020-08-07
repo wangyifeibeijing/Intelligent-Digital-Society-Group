@@ -20,4 +20,5 @@
 |2020-07-04|Qi Wang        |[文本生成（故事情节线）：Plan and Write](2020-07-04/QiWang)|[paper](2020-07-04/QiWang)|
 |2020-07-11|Zhang Yali     |[OutfitNet](2020-07-11/zhangyl)|[paper](2020-07-11/zhangyl)|
 |2020-07-19|Qi Wang        |[文本生成（加入知识图谱的Encode）：Text Generation from Knowledge Graphs with Graph Transformers](2020-07-19/QiWang)|[paper](2020-07-19/QiWang)|
+|2020-08-01|Zhang Yali     |[Fashion Compatibility--LSTM](2020-08-01/zhangyl)|[paper](2020-08-01/zhangyl)|
 
